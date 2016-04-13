@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>MBCS Dashboard</title>
+	<!-- add style sheet links here -->
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/dashboard.css" rel="stylesheet">
+</head>
+
+<body cz-shortcut-listen="true">
+	<!-- Navbar -->
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <img class="navbar-left" src="images/att_globe_rgb_pos.png" width="50px" height="50px">
+        <a class="navbar-brand" href="#">MBCS Training Dashboard</a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<li class="active"><a href="#">Dashboard</a></li>
+					<li><a href="#">Archive</a></li>
+					<li><a href="#">Help</a></li>
+					<li><a href="#"><span class="glyphicon glyphicon-user"></span></a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	
+	<!-- Main Container -->
+	<div class="container-fluid">
+		<div class="row">
+
+			<!-- Sidebar -->
+			<div class="col-sm-3 col-md-2 sidebar"> 
+				<ul class="nav nav-sidebar">
+					<li class="active"><a href="#">Consumer</a></li>
+					<li><a href="#">Business</a></li>
+				</ul>
+				<ul class="nav nav-sidebar">
+					<li><a href="#">ATS</a></li>
+					<li><a href="#">CLM</a></li>
+					<li><a href="#">Combo Bill</a></li>
+					<li><a href="#">DMDR</a></li>
+					<li><a href="#">DSC</a></li>
+					<li><a href="#">MSS</a></li>
+					<li><a href="#">PPD</a></li>
+					<li><a href="#">Retention</a></li>
+					<li><a href="#">SSG</a></li>
+					<li><a href="#">Voice</a></li>
+					<li><a href="#">WLNP</a></li>
+				</ul>
+				<ul class="nav nav-sidebar">
+					<li><a href="#">ATS Chat</a></li>
+					<li><a href="#">Bill Chat</a></li>
+					<li><a href="#">Sales Chat</a></li>
+					<li><a href="#">Social Media</a></li>
+				</ul>
+			</div>
+
+			<!-- Main display area -->
+			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+				<h1 class="page-header">Dashboard <small>Consumer</small></h1>
+				<form class="form-group">
+            <input type="text" class="form-control" placeholder="Search..." data-bind="value: query, valueUpdate: 'keyup'">
+          </form>
+				<div class="table-responsive">
+					<table class="table table-striped" id="course-table">
+						<thead>
+							<tr>
+								<th></th>
+								<th>Course Name</th>
+								<th>Complete</th>
+								<th>Type</th>
+								<th>Status</th>
+							</tr>
+						</thead>
+						<tbody data-bind="foreach: courses">
+							<tr>
+								<td data-bind="html: infoButton"></td>
+								<td data-bind="text: name"></td>
+								<td data-bind="text: complete"></td>
+								<td data-bind="text: type"></td>
+								<td data-bind="text: status"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal -->
+	<div id="idMyModal"></div>
+
+	<!-- Jquery library-->
+	<script src="libs/jquery.min.js"></script>
+
+	<!-- Bootstrap library-->
+	<script src="libs/bootstrap.min.js"></script>
+
+	<!-- KnockoutJS library-->
+	<script src="libs/knockout-3.4.0.js"></script>
+
+	<!-- Dashboard application-->
+	<script src="js/dashboard.js"></script>
+
+</body>
+
+</html>
