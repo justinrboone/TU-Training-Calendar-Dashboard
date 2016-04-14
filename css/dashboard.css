@@ -11,8 +11,12 @@ a {
   color: rgb(0,159,219);
 }
 
-h1 small {
+h1 > small {
   color: rgb(0,159,219);
+}
+
+.btn-primary {
+  background-color: rgb(0,159,219);
 }
 
 
@@ -91,25 +95,14 @@ h1 small {
   margin-top: 0;
 }
 
+.modal-header {
+  background-color: rgb(0,159,219);
+}
 
-/*
- * Placeholder dashboard ideas
- */
+.modal-header h4 {
+  color: #fff;
+}
 
-.placeholders {
-  margin-bottom: 30px;
-  text-align: center;
-}
-.placeholders h4 {
-  margin-bottom: 0;
-}
-.placeholder {
-  margin-bottom: 20px;
-}
-.placeholder img {
-  display: inline-block;
-  border-radius: 50%;
-}
 
 /** ATT Colors **
 

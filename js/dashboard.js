@@ -12,7 +12,6 @@ var Course = function(data) {
     self.complete = data.complete;
     self.ca = data.ca;
     self.notes = data.notes;
-    self.infoButton = '<a href="#"><span class="glyphicon glyphicon-info-sign"></span></a>'
 };
 
 // Store course data here.
@@ -24,35 +23,35 @@ var courseData = [
         status: "New",
         type: "WBT",
         time: 0.25,
-        t3: "",
-        available: "2/9/16",
-        complete: "3/8/16",
+        t3: "N/A",
+        available: "02/09/2016",
+        complete: "03/08/2016",
         ca: "",
         notes: ""
     },
     {
-        line: ["Bill Chat", "Retention"],
+        line: ["Bill Chat", " Retention"],
         name: "Payment Recommender Tool",
         bet: 61407467,
         status: "New",
         type: "WBT",
         time: 0.5,
-        t3: "",
-        available: "1/4/16",
-        complete: "1/31/16",
+        t3: "N/A",
+        available: "01/04/2016",
+        complete: "01/31/2016",
         ca: "",
         notes: ""
     },
     {
-        line: ["Sales Chat", "Social Media"],
+        line: ["Sales Chat", " Social Media"],
         name: "Payment Arrangement Recommender",
         bet: 61518747,
         status: "New",
         type: "WBT",
         time: 0.5,
-        t3: "",
-        available: "2/12/16",
-        complete: "3/18/16",
+        t3: "N/A",
+        available: "02/12/2016",
+        complete: "03/18/2016",
         ca: "",
         notes: ""
     }
@@ -63,6 +62,13 @@ var dashboardViewModel = {
 
     // Create list of courses.
     courses: ko.observableArray([]),
+
+    // List of table headers
+    headers: [
+        {title: "Course Name", sortKey: "name"},
+        {title: "Type", sortKey: "type"},
+        {title: "Status", sortKey: "status"}
+    ],
 
     // Temporarily store input from search field
     query: ko.observable(''),
@@ -83,6 +89,37 @@ var dashboardViewModel = {
                 dashboardViewModel.courses.push(new Course(courseData[x]));
             }
         }
+    },
+
+    sort: function(header, event){
+        var sortKey = header.sortKey;
+        switch(sortKey){
+            case 'name':
+                dashboardViewModel.courses.sort(function(a,b){
+                    return a.name < b.name ? -1 : a.name > b.name ? 1 : a.name == b.name ? 0 : 0;
+                });
+                break;
+            case 'type':
+                dashboardViewModel.courses.sort(function(a,b){
+                    return a.type < b.type ? -1 : a.type > b.type ? 1 : a.type == b.type ? 0 : 0;
+                });
+                break;
+            case 'status':
+                dashboardViewModel.courses.sort(function(a,b){
+                    return a.status < b.status ? -1 : a.status > b.status ? 1 : a.status == b.status ? 0 : 0;
+                });
+                break;
+        }
+    },
+
+    // Insert DOM elements associated with the modal.
+    insertModalContent: function() {
+        $('#myModal').empty().append('<div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="myModalLabel">'+this.name+' - '+this.bet+'</h4></div><div class="modal-body"><dl class="dl-horizontal"> <dt>Type:</dt> <dd>'+this.type+'</dd> <dt>Time:</dt> <dd>'+this.time+'</dd> <dt>Status:</dt> <dd>'+this.status+'</dd> <dt>T3 Date:</dt> <dd>'+this.t3+'</dd> <dt>Available Date:</dt> <dd>'+this.available+'</dd> <dt>Completion Date:</dt> <dd>'+this.complete+'</dd> <dt>Line(s) of Business:</dt> <dd>'+this.line+'</dd> <dt>Notes:</dt> <dd>'+this.notes+'</dd></dl> </div><div class="modal-footer"><button type="button" class="btn btn-default pull-left"><span class="glyphicon glyphicon-open-file" aria-hidden="true"></span></button><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button><button type="button" class="btn btn-primary" data-dismiss="modal">Close</button></div></div></div>');
+    },
+
+    // Open note entry field
+    openNoteField: function() {
+        $('.model-body').append('<textarea class="form-control" rows="3" data-bind="value: notes"></textarea>')
     }
 }
 
