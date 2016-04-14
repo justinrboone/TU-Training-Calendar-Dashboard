@@ -78,6 +78,13 @@ h1 > small {
   background-color: rgb(113,197,232);
 }
 
+.nav > li > a:focus,
+.nav > li > a:hover {
+  color: #fff;
+  background-color: rgb(234,116,0)
+}
+
+
 /*
  * Main content
  */
