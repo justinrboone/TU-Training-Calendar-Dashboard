@@ -51,7 +51,7 @@
 			</div>
 
 			<!-- Main display area -->
-			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="main">
 				<div class="btn-group pull-right" data-toggle="buttons">
 				  <label class="btn btn-default active">
 				    <input type="radio" name="options" id="option1" autocomplete="off" checked> Consumer
@@ -60,7 +60,9 @@
 				    <input type="radio" name="options" id="option2" autocomplete="off"> Business
 				  </label>
 				</div>
-				<h1 class="page-header">Dashboard</h1>
+				<div>
+				<h1 class="page-header"><img src="images/att-university-blue.png"></h1>
+				</div>
 				
 				<!-- Search field -->
 				<form class="form-group">
@@ -86,8 +88,10 @@
 							</tr>
 						</tbody>
 					</table>
-				</div>				
-			</div>
+				</div>
+				<button role="button" class="btn btn-primary btn-sm pull-right" data-bind="click: addCourse" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus"></span> Add Course</button>
+
+				 </div>
 		</div>
 	</div>
 
