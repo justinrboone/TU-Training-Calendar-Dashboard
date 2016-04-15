@@ -27,7 +27,7 @@
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-right">
-					<li class="active"><a href="#">Dashboard</a></li>
+					<li><a href="#">Dashboard</a></li>
 					<li><a href="#">Archive</a></li>
 					<li><a href="#">Help</a></li>
 					<li><a href="#"><span class="glyphicon glyphicon-user"></span></a></li>
@@ -42,18 +42,25 @@
 
 			<!-- Sidebar -->
 			<div class="col-sm-3 col-md-2 sidebar"> 
-				<ul class="nav nav-sidebar">
-					<li class="active"><a href="#">Consumer</a></li>
-					<li><a href="#">Business</a></li>
-				</ul>
 				<ul class="nav nav-sidebar" data-bind="foreach: availableLines">
 					<li><a href="#" data-bind="text: line, click: $parent.lineFilter(line)"></a></li>
+				</ul>
+				<ul class="nav nav-sidebar">
+					<li data-bind="click: $root.clearLineFilter"><a href="#"> Clear Filter</span></a></li>
 				</ul>
 			</div>
 
 			<!-- Main display area -->
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-				<h1 class="page-header">Dashboard <small>Consumer</small></h1>
+				<div class="btn-group pull-right" data-toggle="buttons">
+				  <label class="btn btn-default active">
+				    <input type="radio" name="options" id="option1" autocomplete="off" checked> Consumer
+				  </label>
+				  <label class="btn btn-default">
+				    <input type="radio" name="options" id="option2" autocomplete="off"> Business
+				  </label>
+				</div>
+				<h1 class="page-header">Dashboard</h1>
 				
 				<!-- Search field -->
 				<form class="form-group">

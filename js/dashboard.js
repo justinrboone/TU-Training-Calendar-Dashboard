@@ -150,6 +150,14 @@ var dashboardViewModel = {
         }
     },
 
+    clearLineFilter: function() {
+        dashboardViewModel.courses.removeAll();
+
+        for (var x in courseData) {
+            dashboardViewModel.courses.push(new Course(courseData[x]));
+        }
+    },
+
     sort: function(header, event){
         var sortKey = header.sortKey;
         switch(sortKey){
