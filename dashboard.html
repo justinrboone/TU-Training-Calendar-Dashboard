@@ -9,6 +9,10 @@
 	<!-- add style sheet links here -->
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/dashboard.css" rel="stylesheet">
+
+	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
 </head>
 
 <body cz-shortcut-listen="true">
@@ -22,7 +26,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <img class="navbar-left" src="images/att_globe_rgb_pos.png" width="50px" height="50px">
+        <img class="navbar-left hidden-xs" src="images/att_globe_rgb_pos.png" width="50px" height="50px">
         <a class="navbar-brand" href="#">MBCS Training Dashboard</a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
@@ -30,7 +34,7 @@
 					<li><a href="#">Dashboard</a></li>
 					<li><a href="#">Archive</a></li>
 					<li><a href="#">Help</a></li>
-					<li><a href="#"><span class="glyphicon glyphicon-user"></span></a></li>
+					<li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign In</a></li>
 				</ul>
 			</div>
 		</div>
@@ -40,23 +44,13 @@
 	<div class="container-fluid">
 		<div class="row">
 
-			<!-- Sidebar -->
-			<div class="col-sm-3 col-md-2 sidebar"> 
-				<ul class="nav nav-sidebar" data-bind="foreach: availableLines">
-					<li><a href="#" data-bind="text: line, click: $parent.lineFilter(line)"></a></li>
-				</ul>
-				<ul class="nav nav-sidebar">
-					<li data-bind="click: $root.clearLineFilter"><a href="#"> Clear Filter</span></a></li>
-				</ul>
-			</div>
-
 			<!-- Main display area -->
-			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="main">
+			<div class="col-sm-12 main" id="main">
 				<div class="btn-group pull-right" data-toggle="buttons">
-				  <label class="btn btn-default active">
+				  <label class="btn btn-info btn-sm active">
 				    <input type="radio" name="options" id="option1" autocomplete="off" checked> Consumer
 				  </label>
-				  <label class="btn btn-default">
+				  <label class="btn btn-info btn-sm">
 				    <input type="radio" name="options" id="option2" autocomplete="off"> Business
 				  </label>
 				</div>
@@ -67,14 +61,49 @@
 				<!-- Search field -->
 				<form class="form-group">
 					<div class="input-group">
-						<div class="input-group-addon"><span class="glyphicon glyphicon-filter"></span></div>
-            <input type="text" class="form-control" placeholder="Course name..." data-bind="value: query, valueUpdate: 'keyup'">
+						<div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
+            <input type="text" class="form-control" placeholder="Find course by name..." data-bind="value: query, valueUpdate: 'keyup'">
           </div>
         </form>
 
+        <!-- Filters -->
+				<div class="btn-group">
+					<button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-filter"></span> 
+				    Line</button>
+				  <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span>
+				  </button>
+				  <ul class="dropdown-menu" data-bind="foreach: availableLines">
+				    <li><a href="#" data-bind="text: line, click: $parent.lineFilter(line)"></a></li>
+				  </ul>
+				</div>
+
+				<div class="btn-group">
+					<button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-filter"></span> 
+				    Type</button>
+				  <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span>
+				  </button>
+				  <ul class="dropdown-menu" data-bind="foreach: availableTypes">
+				    <li><a href="#" data-bind="text: type, click: $parent.typeFilter(type)"></a></li>
+				  </ul>
+				</div>
+
+				<div class="btn-group">
+					<button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-filter"></span> 
+				    Status</button>
+				  <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span>
+				  </button>
+				  <ul class="dropdown-menu" data-bind="foreach: availableStatus">
+				    <li><a href="#" data-bind="text: status, click: $parent.statusFilter(status)"></a></li>
+				  </ul>
+				</div>
+
+				<div>
+				<h1 class="page-header"></h1>
+				</div>
+
         <!-- Table of courses --> 
 				<div class="table-responsive">
-					<table class="table table-hover" id="course-table">
+					<table class="table table-hover table-condensed" id="course-table">
 						<thead>
 							<tr data-bind="foreach: headers">
 								<th data-bind="click: $parent.sort, text: title"></th>
@@ -89,6 +118,7 @@
 						</tbody>
 					</table>
 				</div>
+				<button role="button" class="btn btn-default btn-sm pull-left" data-bind="click: $root.clearFilter">Show All</button>
 				<button role="button" class="btn btn-primary btn-sm pull-right" data-bind="click: addCourse" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus"></span> Add Course</button>
 
 				 </div>
