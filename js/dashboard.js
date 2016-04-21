@@ -15,7 +15,7 @@ var Course = function(data) {
 };
 
 // Store course data here. 
-// ** replace with with AJAX request to pull date from server **
+// ** replace with with AJAX request to pull date from server once initiated **
 var courseData = [
     {
         lines: ["DSC"],
@@ -87,17 +87,18 @@ var courseData = [
 // Main dashboard view
 var dashboardViewModel = {
 
-    // Create list of courses.
+    // List of courses
     courses: ko.observableArray([]),
 
     // List of table headers
     headers: ko.observableArray([
         {title: "Course Name", sortKey: "name"},
         {title: "Type", sortKey: "type"},
-        {title: "Status", sortKey: "status"}
+        {title: "Status", sortKey: "status"},
+        {title: "Available Date", sortKey: "available"}
     ]),
 
-    // List of lines of business used to filter the courses in our UI.
+    // List of lines of business
     availableLines: ko.observableArray([
         {line: "ATS"},
         {line: "ATS Chat"},
@@ -116,7 +117,7 @@ var dashboardViewModel = {
         {line: "WLNP"}
     ]),
 
-    // List of course types used to filter the courses in our UI.
+    // List of course types
     availableTypes: ko.observableArray([
         {type: "WBT"},
         {type: "ILT"},
@@ -124,7 +125,7 @@ var dashboardViewModel = {
         {type: "IT"},
     ]),
 
-    // List of course statuses used to filter the courses in our UI.
+    // List of course status options
     availableStatus: ko.observableArray([
         {status: "New"},
         {status: "Updated"},
@@ -141,8 +142,9 @@ var dashboardViewModel = {
         }
     },
 
-    // Filter the course list based on user input.
+    // Filter the course list based on user input
     courseFilter: function(value) {
+
         dashboardViewModel.courses.removeAll();
 
         for (var x in courseData) {
@@ -152,7 +154,7 @@ var dashboardViewModel = {
         }
     },
 
-    // Filter courses by line of business property.
+    // Filter courses by line of business property
     lineFilter: function(value) {
         dashboardViewModel.courses.removeAll();
 
@@ -165,7 +167,7 @@ var dashboardViewModel = {
         }
     },
 
-    // Show only WBT type.
+    // Show only WBT type
     typeFilter: function(value) {
         dashboardViewModel.courses.removeAll();
 
@@ -176,7 +178,7 @@ var dashboardViewModel = {
         }
     },
 
-    // Show only updated status.
+    // Show only updated status
     statusFilter: function(value) {
         dashboardViewModel.courses.removeAll();
 
@@ -187,14 +189,7 @@ var dashboardViewModel = {
         }
     },
 
-    clearFilter: function() {
-        dashboardViewModel.courses.removeAll();
-
-        for (var x in courseData) {
-            dashboardViewModel.courses.push(new Course(courseData[x]));
-        }
-    },
-
+    // Sort table alphabetically by column header
     sort: function(header, event){
         var sortKey = header.sortKey;
         switch(sortKey){
@@ -213,16 +208,30 @@ var dashboardViewModel = {
                     return a.status < b.status ? -1 : a.status > b.status ? 1 : a.status == b.status ? 0 : 0;
                 });
                 break;
+            case 'available':
+                dashboardViewModel.courses.sort(function(a,b){
+                    return a.available < b.available ? -1 : a.available > b.available ? 1 : a.available == b.available ? 0 : 0;
+                });
+                break;
+        }
+    },
+
+    // Reset table data
+    reset: function() {
+        dashboardViewModel.courses.removeAll();
+
+        for (var x in courseData) {
+            dashboardViewModel.courses.push(new Course(courseData[x]));
         }
     },
 
     // Add course
     addCourse: function() {
-        $('#myModal').empty().append('<div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="myModalLabel">Add Course</h4></div><div class="modal-body"><form class="form-horizonal"> <div class="form-group"> <label for="name" class="sol-sm-3 control-label">Name</label> <div class="sol-sm-9"> <input type="text" class="form-control" id="name" placeholder="Name"> </div> </div> <div class="form-group"> <label for="bet" class="sol-sm-2 control-label">BET</label> <div class="sol-sm-10"> <input type="text" class="form-control" id="bet" placeholder="BET"> </div> </div> <div class="form-group"> <label for="type" class="sol-sm-2 control-label">Type</label> <div class="sol-sm-10"> <select name="type" class="form-control" id="type"> <option value="WBT">WBT</option> <option value="ILT">ILT</option> <option value="WTM">WTM</option> <option value="IT">IT</option> </select> </div> </div> <div class="form-group"> <label for="status" class="sol-sm-2 control-label">Status</label> <div class="sol-sm-10"> <select name="status" class="form-control" id="status"> <option value="New">New</option> <option value="Updated">Updated</option> <option value="Projected">Projected</option> </select> </div> </div> <div class="form-group"> <label for="time" class="sol-sm-2 control-label">Time</label> <div class="sol-sm-10"> <input type="text" class="form-control" id="time" placeholder="0.0"> </div> </div> <div class="form-group"> <label for="t3Date" class="sol-sm-2 control-label">T3 Date</label> <div class="sol-sm-10"> <input type="date" class="form-control" id="t3Date" placeholder="DD/MM/YYYY"> </div> </div> <div class="form-group"> <label for="availableDate" class="sol-sm-2 control-label">Available Date</label> <div class="sol-sm-10"> <input type="date" class="form-control" id="availableDate" placeholder="DD/MM/YYYY"> </div> </div> <div class="form-group"> <label for="completionDate" class="sol-sm-2 control-label">Completion Date</label> <div class="sol-sm-10"> <input type="date" class="form-control" id="completionDate" placeholder="DD/MM/YYYY"> </div> </div> <div class="form-group"> <label for="notes" class="sol-sm-2 control-label">Notes</label> <div class="sol-sm-10"> <textarea rows"3" class="form-control" id="notes"> </textarea> </div> </div> <div class="form-group"> <label for="announcement" class="sol-sm-2 control-label">Annoucement URL</label> <div class="sol-sm-10"> <input type="url" class="form-control" id="announcement" placeholder="URL"> </div> </div> <div class="form-group"> </div> </form> </div><div class="modal-footer"><button type="button" class="btn btn-primary">Save</button><button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button></div></div></div>');
+        $('#myModal').empty().append('<div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="myModalLabel">Add Course</h4></div><div class="modal-body"><form class="form-horizonal"> <div class="form-group"> <label for="name" class="sol-sm-3 control-label">Name</label> <div class="sol-sm-9"> <input type="text" class="form-control" id="name" placeholder="Name"> </div> </div> <div class="form-group"> <label for="bet" class="sol-sm-2 control-label">BET</label> <div class="sol-sm-10"> <input type="text" class="form-control" id="bet" placeholder="BET"> </div> </div> <div class="form-group"> <label for="type" class="sol-sm-2 control-label">Type</label> <div class="sol-sm-10"> <select name="type" class="form-control" id="type"> <option value="WBT">WBT</option> <option value="ILT">ILT</option> <option value="WTM">WTM</option> <option value="IT">IT</option> </select> </div> </div> <div class="form-group"> <label for="status" class="sol-sm-2 control-label">Status</label> <div class="sol-sm-10"> <select name="status" class="form-control" id="status"> <option value="New">New</option> <option value="Updated">Updated</option> <option value="Projected">Projected</option> </select> </div> </div> <div class="form-group"> <label for="time" class="sol-sm-2 control-label">Time (in hours)</label> <div class="sol-sm-10"> <input type="text" class="form-control" id="time" placeholder="0.0"> </div> </div> <div class="form-group"> <label for="t3Date" class="sol-sm-2 control-label">T3 Date</label> <div class="sol-sm-10"> <input type="date" class="form-control" id="t3Date" placeholder="DD/MM/YYYY"> </div> </div> <div class="form-group"> <label for="availableDate" class="sol-sm-2 control-label">Available Date</label> <div class="sol-sm-10"> <input type="date" class="form-control" id="availableDate" placeholder="DD/MM/YYYY"> </div> </div> <div class="form-group"> <label for="completionDate" class="sol-sm-2 control-label">Completion Date</label> <div class="sol-sm-10"> <input type="date" class="form-control" id="completionDate" placeholder="DD/MM/YYYY"> </div> </div> <div class="form-group"> <label for="notes" class="sol-sm-2 control-label">Notes</label> <div class="sol-sm-10"> <textarea rows"3" class="form-control" id="notes"> </textarea> </div> </div> <div class="form-group"> <label for="announcement" class="sol-sm-2 control-label">Annoucement URL</label> <div class="sol-sm-10"> <input type="url" class="form-control" id="announcement" placeholder="URL"> </div> </div> <div class="form-group"> </div> </form> </div><div class="modal-footer"><button type="button" class="btn btn-primary">Save</button><button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button></div></div></div>');
     },
 
     // Insert DOM elements associated with the modal.
-    insertModalContent: function() {
+    courseDetails: function() {
         $('#myModal').empty().append('<div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="myModalLabel">'+this.name+' - '+this.bet+'</h4></div><div class="modal-body"><dl class="dl-horizontal"> <dt>Type:</dt> <dd>'+this.type+'</dd> <dt>Time:</dt> <dd>'+this.time+'</dd> <dt>Status:</dt> <dd>'+this.status+'</dd> <dt>T3 Date:</dt> <dd>'+this.t3+'</dd> <dt>Available Date:</dt> <dd>'+this.available+'</dd> <dt>Completion Date:</dt> <dd>'+this.complete+'</dd> <dt>Line(s) of Business:</dt> <dd>'+this.lines+'</dd> <dt>Notes:</dt> <dd>'+this.notes+'</dd></dl> </div><div class="modal-footer"><button type="button" class="btn btn-default pull-left" data-toggle="tooltip" data-placement="right" title="Course Announcement"><span class="glyphicon glyphicon-open-file" aria-hidden="true"></span></button><button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Edit"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button><button type="button" class="btn btn-primary" data-dismiss="modal">Close</button></div></div></div>');
     },
 }
